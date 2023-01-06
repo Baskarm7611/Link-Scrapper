@@ -4,8 +4,10 @@ __pycache__/
 *$py.class
 
 # C extensions
+._*
 *.so
-
+*.session
+log.txt
 # Distribution / packaging
 .Python
 build/
