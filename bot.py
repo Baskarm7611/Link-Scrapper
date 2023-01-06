@@ -100,13 +100,16 @@ async def domain_cmd(c, m: types.Message):
     & filters.user(ADMINS)
 )
 async def link_scrapper(c, m: types.Message):
-    x = m.text or m.caption
-    raw_links = await extract_link(x.html) if x else ""
-    links = await get_inline_keyboard_markup_url(m, raw_links)
-    filterted_links = await filter_links_by_domain(links)
-    text = "".join(f"`{link}`\n" for link in filterted_links)
-    await m.reply(text, disable_web_page_preview=0)
-    return
+    try:
+        x = m.text or m.caption
+        raw_links = await extract_link(x.html) if x else ""
+        links = await get_inline_keyboard_markup_url(m, raw_links)
+        filterted_links = await filter_links_by_domain(links)
+        text = "".join(f"`{link}`\n" for link in filterted_links)
+        await m.reply(text, disable_web_page_preview=0)
+    except Exception as e:
+        print(e)
+        await m.reply("Some error occurred. Just forward or send any message with links")
 
 
 with contextlib.suppress(Exception):
