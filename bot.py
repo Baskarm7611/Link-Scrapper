@@ -69,7 +69,7 @@ async def start_cmd(c, m: types.Message):
     filters.command("scrap") & filters.regex(r"https?://[^\s]+") & filters.user(ADMINS)
 )
 async def link_scrapper_cmd(c, m: types.Message):
-    url = m.matches[0].group(0)
+    url = m.command[1]
     links = await scrap_links(url)
     filterted_links = await filter_links_by_domain(links)
     text = "".join(f"`{link}`\n" for link in filterted_links)

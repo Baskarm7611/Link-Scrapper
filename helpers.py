@@ -39,7 +39,10 @@ async def validate_domain(domain):
 
 
 async def get_domain(url):
-    return url.split("/")[2]
+    try:
+        return url.split("/")[2]
+    except IndexError:
+        return url
 
 
 async def get_domain_from_file(filename="log.txt"):
@@ -50,6 +53,7 @@ async def get_domain_from_file(filename="log.txt"):
 
 async def filter_links_by_domain(links):
     domain = await get_domain_from_file("log.txt")
+
     return (
         [link for link in links if await get_domain(link) == domain]
         if domain
